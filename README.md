@@ -1,5 +1,9 @@
 # Connection Broker Infrastructure in Azure
 
+
+## Diagram
+![certiport_leostream](https://user-images.githubusercontent.com/6284506/120906922-3d97c680-c612-11eb-974b-01e84a13208f.png)
+
 ## Resources
 - resource group
 - application gateway
