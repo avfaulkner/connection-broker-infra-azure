@@ -1,6 +1,6 @@
 # Connection Broker Infrastructure in Azure
 
-# Resources
+## Resources
 - resource group
 - application gateway
     - static ip address for app gateway frontend
