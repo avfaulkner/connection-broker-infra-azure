@@ -35,7 +35,7 @@ resource "azurerm_virtual_machine_scale_set" "broker_group" {
     computer_name_prefix = var.computer_name_prefix
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data = file(user_data.sh)
+    custom_data = file(user_data.conf)
   }
 
   os_profile_linux_config {

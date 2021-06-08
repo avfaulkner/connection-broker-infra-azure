@@ -28,12 +28,29 @@ resource "azurerm_subnet" "subnet-private" {
   address_prefixes       = ["10.0.2.0/24"]
 }
 
+resource "azurerm_subnet" "db-subnet-private" {
+  name                 = "db-subnet-private"
+  resource_group_name  = azurerm_resource_group.res_group.name
+  virtual_network_name = azurerm_virtual_network.virt-network.name
+  address_prefixes     = ["10.0.3.0/24"]
+  service_endpoints    = ["Microsoft.Storage"]
+  delegation {
+    name = "fs"
+    service_delegation {
+      name = "Microsoft.DBforPostgreSQL/flexibleServers"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+    }
+  }
+}
+
 # Public
 resource "azurerm_subnet" "subnet-public" {
   name                 = "remote-host-subnet-pub"
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
-  address_prefixes       = ["10.0.3.0/24"]
+  address_prefixes       = ["10.0.4.0/24"]
 }
 
 resource "azurerm_public_ip" "remote-host-ip" {
