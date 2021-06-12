@@ -1,7 +1,7 @@
 # Connection Broker Infrastructure in Azure
 
 ## Diagram
-![certiport_leostream](./certiport_leostream.png)
+![certiport_leostream](files/certiport_leostream.png)
 
 ## Resources
 - resource group
