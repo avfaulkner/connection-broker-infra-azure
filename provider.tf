@@ -1,9 +1,20 @@
-# Configure the azure provider
-provider "azurerm" {
-//  version = "=2.0.0"
-  features {}
+terraform {
+  required_version = ">= 0.13"
+  required_providers {
+    azure = {
+      source  = "hashicorp/azurerm"
+      version = "2.63.0"
+    }
+    random = {
+      source = "hashicorp/random"
+    }
+    tls = {
+      source = "hashicorp/tls"
+    }
+  }
 }
 
-//terraform {
-//  required_version = ">= 0.12.20"
-//}
+# provider "azurerm" {
+#   features {}
+# }
+
