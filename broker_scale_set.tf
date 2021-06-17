@@ -13,8 +13,9 @@ resource "azurerm_virtual_machine_scale_set" "broker_group" {
   storage_profile_image_reference {
     publisher = "OpenLogic"
     offer     = "CentOS"
-    sku       = "8_1"
-    version   = "8.1.2020022700"
+    sku       = "7_9"
+    # version   = "8.1.2020022700"
+    # id = ""
   }
 
   storage_profile_os_disk {
@@ -35,11 +36,16 @@ resource "azurerm_virtual_machine_scale_set" "broker_group" {
     computer_name_prefix = var.computer_name_prefix
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data = file(user_data.conf)
+    custom_data = file("files/user_data.sh")
   }
 
   os_profile_linux_config {
     disable_password_authentication = true
+
+    ssh_keys {
+      path     = "/home/${var.admin_username}/.ssh/authorized_keys"
+      key_data = file("${var.ssh_pub_key_path}")
+    }
   }
 
   network_profile {
@@ -49,12 +55,12 @@ resource "azurerm_virtual_machine_scale_set" "broker_group" {
     ip_configuration {
         name = "scale_set_ip"
         subnet_id = azurerm_subnet.scale-set-subnet-private.id
-        load_balancer_backend_address_pool_ids = azurerm_application_gateway.appgateway.backend_address_pool.id
+        load_balancer_backend_address_pool_ids = azurerm_application_gateway.appgateway.backend_address_pool[0].id
         primary = true
     }
   }
   
   tags = {
-      name = broker_scale_set
+      name = "broker_scale_set"
   }
 }
