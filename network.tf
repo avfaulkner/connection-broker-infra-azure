@@ -7,10 +7,6 @@ resource "azurerm_virtual_network" "virt-network" {
   address_space       = ["10.0.0.0/16"]
 }
 
-# Route tables
-# Public
-
-
 # Subnets
 # Private
 
@@ -44,6 +40,15 @@ resource "azurerm_subnet" "db-subnet-private" {
     }
   }
 }
+
+# Allow Scale set VMs access through database firewall
+resource "azurerm_postgresql_flexible_server_firewall_rule" "db-firewall-rule" {
+  name             = "db-firewall-rule"
+  server_id        = azurerm_postgresql_flexible_server.broker_database.id
+  start_ip_address = azurerm_subnet.scale-set-subnet-private.address_prefixes
+  end_ip_address   = azurerm_subnet.scale-set-subnet-private.address_prefixes
+}
+
 
 # Public
 resource "azurerm_subnet" "subnet-public" {
@@ -81,26 +86,4 @@ resource "azurerm_network_interface" "remote-host-nic" {
 resource "azurerm_network_interface_security_group_association" "sg-nic" {
   network_interface_id      = azurerm_network_interface.remote-host-nic.id
   network_security_group_id = azurerm_network_security_group.remote-host-sg.id
-}
-
-# Storage account. The storage account is only to store the boot diagnostics data
-resource "random_id" "randomId" {
-  keepers = {
-    # Generate a new ID only when a new resource group is defined
-    resource_group = azurerm_resource_group.res_group.name
-  }
-
-  byte_length = 8
-}
-
-resource "azurerm_storage_account" "mystorageaccount" {
-  name                        = "diag${random_id.randomId.hex}"
-  resource_group_name         = azurerm_resource_group.res_group.name
-  location                    = var.region
-  account_replication_type    = "LRS"
-  account_tier                = "Standard"
-
-  tags = {
-    Name = "remote-host-storage-account"
-  }
 }
