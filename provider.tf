@@ -22,6 +22,4 @@ terraform {
 
 provider "azurerm" {
   features {}
-    # use_msi = true # managed_service_identity
-
 }
