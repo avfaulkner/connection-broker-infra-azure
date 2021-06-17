@@ -6,3 +6,6 @@ output "application_gateway" {
     value = azurerm_application_gateway.appgateway
 }
 
+output "database_fqdn" {
+    value = azurerm_postgresql_flexible_server.broker_database.fqdn
+}

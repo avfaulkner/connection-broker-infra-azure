@@ -46,3 +46,7 @@ variable "computer_name_prefix" {
   type = string
   description = "Name of your scale set instances"
 }
+
+variable "ssh_pub_key_path" {
+  description = "SSH key for Leostream Broker"
+}

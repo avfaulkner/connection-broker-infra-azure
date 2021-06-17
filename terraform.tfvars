@@ -8,3 +8,4 @@ dbadmin_password = ""
 ssh_cidr_blocks = []
 destination_address_prefix = ["0.0.0.0/0"]
 computer_name_prefix = "leostream_broker"
+ssh_pub_key_path = "~/.ssh/leostream_azure.pub" # Add /path-to-key/public-key-file here
