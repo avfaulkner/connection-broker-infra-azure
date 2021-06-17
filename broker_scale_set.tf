@@ -1,5 +1,5 @@
 resource "azurerm_virtual_machine_scale_set" "broker_group" {
-  name = "Broker_autoscale_group"
+  name = "broker_autoscale_group"
   location = var.region
   resource_group_name = azurerm_resource_group.res_group.name
   upgrade_policy_mode = "Manual"
@@ -55,7 +55,7 @@ resource "azurerm_virtual_machine_scale_set" "broker_group" {
     ip_configuration {
         name = "scale_set_ip"
         subnet_id = azurerm_subnet.scale-set-subnet-private.id
-        load_balancer_backend_address_pool_ids = azurerm_application_gateway.appgateway.backend_address_pool[0].id
+        load_balancer_backend_address_pool_ids = [azurerm_application_gateway.appgateway.backend_address_pool[0].id]
         primary = true
     }
   }
