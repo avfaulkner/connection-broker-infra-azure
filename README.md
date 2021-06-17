@@ -64,7 +64,9 @@ terraform apply
 
 
 ## Resources
-- resource group
+- two resource groups
+    - one for infrastructure
+    - one which will contain blob storage to store the terraform state files
 - application gateway
     - static public ip address for app gateway frontend
     - backend pool for app gateway backend
