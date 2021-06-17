@@ -1,7 +1,7 @@
 # PostgreSQL Flexible Server is highly available
 resource "azurerm_postgresql_flexible_server" "broker_database" {
-  name                   = "broker_database"
-  resource_group_name    = azurerm_resource_group.exares_groupmple.name
+  name                   = "leostreamdb"
+  resource_group_name    = azurerm_resource_group.res_group.name
   location               = azurerm_resource_group.res_group.location
   version                = "12"
   delegated_subnet_id    = azurerm_subnet.db-subnet-private.id
@@ -12,3 +12,4 @@ resource "azurerm_postgresql_flexible_server" "broker_database" {
 
   sku_name = "GP_Standard_D4s_v3"
 }
+
