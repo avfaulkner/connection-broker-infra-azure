@@ -14,15 +14,15 @@ resource "azurerm_virtual_machine_scale_set" "broker_group" {
     publisher = "OpenLogic"
     offer     = "CentOS"
     sku       = "7_9"
-    # version   = "8.1.2020022700"
+    version   = "latest"
     # id = ""
   }
 
   storage_profile_os_disk {
-    name          = "os_disk"
+    # name          = "os_disk"
     caching       = "ReadWrite"
     create_option = "FromImage"
-    # managed_disk_type = "Standard_LRS"
+    managed_disk_type = "Standard_LRS"
   }
 
   storage_profile_data_disk {
