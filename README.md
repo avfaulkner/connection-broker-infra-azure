@@ -37,28 +37,42 @@ Choose your subscription ID:
 az account list --output table
 ```
 
-3. Use your subscription ID to create the service principal account:
+3. Set subscription
+```
+az account set --subscription <Azure-SubscriptionId>
+```
+
+4. Use your subscription ID to create the service principal account:
 ```
 az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID" --name="Terraform-spa"
 ```
 
-4. Run the azurecli.sh script
+These values will be mapped to these Terraform variables:
+- appId (Azure) → client_id (Terraform).
+- password (Azure) → client_secret (Terraform).
+- tenant (Azure) → tenant_id (Terraform).
+
+Add the subscription ID and Tenant ID to `providers.tf` in 'backend "azurerm"'.
+
+5. Run the azurecli.sh script
 This script will create the remote backend to store the Terraform state files.
 ```
 chmod 764 azurecli.sh && ./azurecli.sh
 ```
+The script will export a value called `storage_account_name` that looks like "tfstate(some value)". Place this value in `provider.tf` in 'backend "azurerm"'.
 
-5. Initialize Terraform
+
+6. Initialize Terraform
 ```
 terraform init
 ```
 
-6. View the infrastructure plan
+7. View the infrastructure plan
 ```
 terraform plan
 ```
 
-7. Apply the Terraform plan
+8. Apply the Terraform plan
 ```
 terraform apply
 ```
