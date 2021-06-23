@@ -47,7 +47,7 @@ az account set --subscription <Azure-SubscriptionId>
 az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID" --name="Terraform-spa"
 ```
 
-These values will be mapped to these Terraform variables:
+This code will output several values. These values will be mapped to these Terraform variables:
 - appId (Azure) → client_id (Terraform).
 - password (Azure) → client_secret (Terraform).
 - tenant (Azure) → tenant_id (Terraform).
@@ -61,18 +61,19 @@ chmod 764 azurecli.sh && ./azurecli.sh
 ```
 The script will export a value called `storage_account_name` that looks like "tfstate(some value)". Place this value in `provider.tf` in 'backend "azurerm"'.
 
+6. Remember to add all variables in `terraform.tfvars` prior to running the Terraform script. 
 
-6. Initialize Terraform
+7. Initialize Terraform
 ```
 terraform init
 ```
 
-7. View the infrastructure plan
+8. View the infrastructure plan
 ```
 terraform plan
 ```
 
-8. Apply the Terraform plan
+9. Apply the Terraform plan
 ```
 terraform apply
 ```
