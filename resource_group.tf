@@ -1,9 +1,9 @@
 # Create a resource group for all resources
 resource "azurerm_resource_group" "res_group" {
-  name     = "af-certiport-rg"
+  name     = "leostream-resource-group"
   location = var.region
 
   tags = {
-    Name = "resource-group"
+    Name = "leostream-resource-group"
   }
 }
