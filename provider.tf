@@ -13,11 +13,13 @@ terraform {
     }
   }
   backend "azurerm" { # Create remote backend to store terraform state file
-    storage_account_name = "tfstate2026"
-    container_name       = "tfstate" # The name of the blob container.
+    resource_group_name  = "tfstate"
+    storage_account_name = ""
+    container_name       = "tfstate"           # The name of the blob container.
     key                  = "terraform.tfstate" #The name of the state store file to be created.
+    subscription_id      = ""
+    tenant_id            = "" 
   }
-
 }
 
 provider "azurerm" {
