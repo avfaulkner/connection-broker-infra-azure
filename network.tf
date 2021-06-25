@@ -7,23 +7,39 @@ resource "azurerm_virtual_network" "virt-network" {
   address_space       = var.virtual_network
 }
 
-# Subnets
-# Private
-
-# resource "azurerm_subnet" "scale-set-subnet-private" {
-#   name                 = "scale-set-subnet-priv"
-#   resource_group_name  = azurerm_resource_group.res_group.name
-#   virtual_network_name = azurerm_virtual_network.virt-network.name
-#   address_prefixes     = [var.scale_set_subnet_private]
-# }
-
-resource "azurerm_subnet" "desktop-subnet-private" {
-  name                 = "remote-host-subnet-priv"
+# App Gateway subnets
+resource "azurerm_subnet" "gateway-subnet-frontend" {
+  name                 = "frontend"
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
-  address_prefixes     = [var.desktop_subnet_private]
+  address_prefixes     = [var.gateway-subnet-frontend]
 }
 
+
+# Broker VMs
+resource "azurerm_subnet" "broker_subnet" {
+  name                 = "broker_subnet"
+  resource_group_name  = azurerm_resource_group.res_group.name
+  virtual_network_name = azurerm_virtual_network.virt-network.name
+  address_prefixes     = [var.broker_subnet]
+}
+
+resource "azurerm_network_interface" "broker_nic" {
+  count = 2
+  name                = "broker-nic${count.index}"
+  location            = azurerm_resource_group.res_group.location
+  resource_group_name = azurerm_resource_group.res_group.name
+
+  ip_configuration {
+    name                          = "broker-internal${count.index}"
+    subnet_id                     = azurerm_subnet.broker_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+
+
+# Database
 resource "azurerm_subnet" "db-subnet-private" {
   name                 = "db-subnet-private"
   resource_group_name  = azurerm_resource_group.res_group.name
@@ -58,6 +74,16 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "db-firewall-rule" {
 #   address_prefixes     = ["10.0.4.0/24"]
 # }
 
+
+# Remote Desktop Networking
+
+resource "azurerm_subnet" "desktop-subnet-private" {
+  name                 = "remote-host-subnet-priv"
+  resource_group_name  = azurerm_resource_group.res_group.name
+  virtual_network_name = azurerm_virtual_network.virt-network.name
+  address_prefixes     = [var.desktop_subnet_private]
+}
+
 resource "azurerm_public_ip" "remote-host-ip" {
   location            = var.region
   name                = "remote-host-ip"
@@ -87,3 +113,4 @@ resource "azurerm_network_interface_security_group_association" "sg-nic" {
   network_interface_id      = azurerm_network_interface.remote-host-nic.id
   network_security_group_id = azurerm_network_security_group.remote-host-sg.id
 }
+

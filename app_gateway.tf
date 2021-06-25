@@ -10,20 +10,6 @@ locals {
   redirect_configuration_name    = "${azurerm_virtual_network.virt-network.name}-rdrcfg"
 }
 
-resource "azurerm_subnet" "gateway-subnet-frontend" {
-  name                 = "frontend"
-  resource_group_name  = azurerm_resource_group.res_group.name
-  virtual_network_name = azurerm_virtual_network.virt-network.name
-  address_prefixes     = [var.gateway-subnet-frontend]
-}
-
-resource "azurerm_subnet" "scale-set-subnet-backend" {
-  name                 = "backend"
-  resource_group_name  = azurerm_resource_group.res_group.name
-  virtual_network_name = azurerm_virtual_network.virt-network.name
-  address_prefixes     = [var.broker_subnet]
-}
-
 resource "azurerm_public_ip" "appgw-pub-ip" {
   name                = "appgw-public-ip"
   resource_group_name = azurerm_resource_group.res_group.name
@@ -59,12 +45,13 @@ resource "azurerm_application_gateway" "appgateway" {
 
   backend_address_pool {
     name = local.backend_address_pool_name
+    ip_addresses = "${azurerm_linux_virtual_machine.broker[*].private_ip_address}"
   }
 
   backend_http_settings {
     name                  = local.http_setting_name
     cookie_based_affinity = "Disabled"
-    path                  = "/path1/"
+    path                  = "/"
     port                  = 80
     protocol              = "Http"
     request_timeout       = 60

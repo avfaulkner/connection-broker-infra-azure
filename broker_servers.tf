@@ -14,7 +14,7 @@ resource "azurerm_linux_virtual_machine" "broker" {
   size                = "Standard_F2"
   admin_username      = var.admin_username
   network_interface_ids = [
-    azurerm_network_interface.broker_nic.id,
+    azurerm_network_interface.broker_nic[count.index].id,
   ]
   disable_password_authentication = true
 
