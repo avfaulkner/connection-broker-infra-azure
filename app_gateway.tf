@@ -10,18 +10,18 @@ locals {
   redirect_configuration_name    = "${azurerm_virtual_network.virt-network.name}-rdrcfg"
 }
 
-resource "azurerm_subnet" "scale-set-subnet-frontend" {
+resource "azurerm_subnet" "gateway-subnet-frontend" {
   name                 = "frontend"
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
-  address_prefixes     = [var.scale_set_subnet_frontend]
+  address_prefixes     = [var.gateway-subnet-frontend]
 }
 
 resource "azurerm_subnet" "scale-set-subnet-backend" {
   name                 = "backend"
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
-  address_prefixes     = [var.scale_set_subnet_backend]
+  address_prefixes     = [var.broker_subnet]
 }
 
 resource "azurerm_public_ip" "appgw-pub-ip" {
@@ -44,7 +44,7 @@ resource "azurerm_application_gateway" "appgateway" {
 
   gateway_ip_configuration {
     name      = "my-gateway-ip-configuration"
-    subnet_id = azurerm_subnet.scale-set-subnet-frontend.id
+    subnet_id = azurerm_subnet.gateway-subnet-frontend.id
   }
 
   frontend_port {
