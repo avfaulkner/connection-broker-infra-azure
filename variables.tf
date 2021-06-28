@@ -56,12 +56,12 @@ variable "virtual_network" {
   default     = ["10.0.0.0/16"]
 }
 
-variable "scale_set_subnet_backend" {
-  description = "CIDR for scale set private subnet"
+variable "broker_subnet" {
+  description = "CIDR for scale set private broker subnet"
 }
 
-variable "scale_set_subnet_frontend" {
-  description = "CIDR for scale set private subnet"
+variable "gateway-subnet-frontend" {
+  description = "CIDR for app gateway frontend subnet"
 }
 
 variable "desktop_subnet_private" {

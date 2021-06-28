@@ -18,6 +18,8 @@ resource "azurerm_linux_virtual_machine" "broker" {
   ]
   disable_password_authentication = true
 
+  custom_data = filebase64("files/user_data.sh")
+
   admin_ssh_key {
     username       = var.admin_username
     public_key     = file("${var.ssh_pub_key_path}")

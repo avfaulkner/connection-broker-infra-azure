@@ -3,7 +3,7 @@ output "resource_group" {
 }
 
 output "application_gateway_frontend_ip" {
-  value = azurerm_application_gateway.appgateway.frontend_ip_configuration
+  value = azurerm_public_ip.appgw-pub-ip.ip_address
 }
 
 output broker {
