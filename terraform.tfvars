@@ -10,8 +10,7 @@ destination_address_prefix = [""]
 computer_name_prefix       = ""
 ssh_pub_key_path           = "" # Add /path-to-key/public-key-file here
 virtual_network            = [""]
-scale_set_subnet_backend   = ""
-scale_set_subnet_frontend  = ""
+broker_subnet              = ""
+gateway-subnet-frontend    = ""
 desktop_subnet_private     = ""
 db_subnet_private          = ""
-
