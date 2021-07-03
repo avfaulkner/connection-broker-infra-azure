@@ -1,6 +1,6 @@
 # # server security group for remote hosts
-resource "azurerm_network_security_group" "remote-host-sg" {
-  name                = "remote-host-sg"
+resource "azurerm_network_security_group" "desktop-sg" {
+  name                = "desktop-sg"
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
 
