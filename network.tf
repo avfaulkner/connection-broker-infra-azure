@@ -108,9 +108,9 @@ resource "azurerm_network_interface" "desktop-nic" {
   }
 }
 
-# Connect the security group to the network interface
-resource "azurerm_network_interface_security_group_association" "sg-nic" {
-  network_interface_id      = azurerm_network_interface.desktop-nic.id
+# Connect the security group to the subnet
+resource "azurerm_subnet_network_security_group_association" "desktop-sg-assoc" {
+  subnet_id                 = azurerm_subnet.desktop-subnet-private.id
   network_security_group_id = azurerm_network_security_group.desktop-sg.id
 }
 
