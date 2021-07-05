@@ -82,8 +82,8 @@ resource "azurerm_public_ip" "desktop-ip" {
   allocation_method   = "Dynamic"
 }
 
-resource "azurerm_network_interface" "desktop-nic" {
-  name                = "desktop-nic"
+resource "azurerm_network_interface" "desktop_nic" {
+  name                = "desktop_nic"
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
 
@@ -95,6 +95,30 @@ resource "azurerm_network_interface" "desktop-nic" {
   }
 
   tags = {
-    Name = "desktop-nic"
+    Name = "desktop_nic"
   }
 }
+
+####################################################################
+# Bastions
+
+resource "azurerm_subnet" "bastion_subnet" {
+  name                 = "bastion_subnet"
+  resource_group_name  = azurerm_resource_group.res_group.name
+  virtual_network_name = azurerm_virtual_network.virt-network.name
+  address_prefixes     = [var.bastion_subnet]
+}
+
+resource "azurerm_network_interface" "bastion_nic" {
+  count = 2
+  name                = "bastion-nic${count.index}"
+  location            = azurerm_resource_group.res_group.location
+  resource_group_name = azurerm_resource_group.res_group.name
+
+  ip_configuration {
+    name                          = "bastion-internal${count.index}"
+    subnet_id                     = azurerm_subnet.bastion_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
