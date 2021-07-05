@@ -4,7 +4,7 @@ resource "azurerm_postgresql_flexible_server" "broker_database" {
   resource_group_name    = azurerm_resource_group.res_group.name
   location               = azurerm_resource_group.res_group.location
   version                = "12"
-  delegated_subnet_id    = azurerm_subnet.db-subnet-private.id
+  delegated_subnet_id    = azurerm_subnet.db_subnet.id
   administrator_login    = var.dbadmin_username
   administrator_password = var.dbadmin_password
 

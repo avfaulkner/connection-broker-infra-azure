@@ -17,6 +17,6 @@ output broker {
 # }
 
 # output "db-subnet-address-prefix" {
-#   value = azurerm_subnet.db-subnet-private
+#   value = azurerm_subnet.db_subnet
 # }
 
