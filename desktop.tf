@@ -3,7 +3,7 @@ resource "azurerm_windows_virtual_machine" "desktop" {
   name                = "desktop"
   resource_group_name = azurerm_resource_group.res_group.name
   location            = azurerm_resource_group.res_group.location
-  size                = "Standard_F2"
+  size                = "Standard_B4ms"
   admin_username      = var.admin_username
   admin_password      = var.admin_password
   network_interface_ids = [
@@ -20,7 +20,7 @@ resource "azurerm_windows_virtual_machine" "desktop" {
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
     offer     = "Windows-10"
-    sku       = "19h2-pro-g2"
+    sku       = "20h2-pro-g2"
     version   = "latest"
   }
 }
