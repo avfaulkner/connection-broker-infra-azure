@@ -7,7 +7,8 @@ resource "azurerm_virtual_network" "virt-network" {
   address_space       = var.virtual_network
 }
 
-# App Gateway subnets
+############################################################
+# App Gateway 
 resource "azurerm_subnet" "gateway-subnet-frontend" {
   name                 = "frontend"
   resource_group_name  = azurerm_resource_group.res_group.name
@@ -15,8 +16,8 @@ resource "azurerm_subnet" "gateway-subnet-frontend" {
   address_prefixes     = [var.gateway-subnet-frontend]
 }
 
-
-# Broker VMs
+############################################################
+# Brokers
 resource "azurerm_subnet" "broker_subnet" {
   name                 = "broker_subnet"
   resource_group_name  = azurerm_resource_group.res_group.name
@@ -37,11 +38,10 @@ resource "azurerm_network_interface" "broker_nic" {
   }
 }
 
-
-
-# Database
-resource "azurerm_subnet" "db-subnet-private" {
-  name                 = "db-subnet-private"
+#################################################################
+# Databases
+resource "azurerm_subnet" "db_subnet" {
+  name                 = "db_subnet"
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.db_subnet_private]
@@ -65,52 +65,36 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "db-firewall-rule" {
   end_ip_address   = "10.0.1.254"
 }
 
+####################################################################
+# Remote Desktop 
 
-# Public
-# resource "azurerm_subnet" "subnet-public" {
-#   name                 = "remote-host-subnet-pub"
-#   resource_group_name  = azurerm_resource_group.res_group.name
-#   virtual_network_name = azurerm_virtual_network.virt-network.name
-#   address_prefixes     = ["10.0.4.0/24"]
-# }
-
-
-# Remote Desktop Networking
-
-resource "azurerm_subnet" "desktop-subnet-private" {
-  name                 = "remote-host-subnet-priv"
+resource "azurerm_subnet" "desktop_subnet" {
+  name                 = "desktop-subnet"
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.desktop_subnet_private]
 }
 
-resource "azurerm_public_ip" "remote-host-ip" {
+resource "azurerm_public_ip" "desktop-ip" {
   location            = var.region
-  name                = "remote-host-ip"
+  name                = "desktop-ip"
   resource_group_name = azurerm_resource_group.res_group.name
   allocation_method   = "Dynamic"
 }
 
-resource "azurerm_network_interface" "remote-host-nic" {
-  name                = "remote-host-nic"
+resource "azurerm_network_interface" "desktop-nic" {
+  name                = "desktop-nic"
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
 
   ip_configuration {
     name                          = "myNicConfiguration"
-    subnet_id                     = azurerm_subnet.desktop-subnet-private.id
+    subnet_id                     = azurerm_subnet.desktop_subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.remote-host-ip.id
+    public_ip_address_id          = azurerm_public_ip.desktop-ip.id
   }
 
   tags = {
-    Name = "remote-host-nic"
+    Name = "desktop-nic"
   }
 }
-
-# Connect the security group to the network interface
-resource "azurerm_network_interface_security_group_association" "sg-nic" {
-  network_interface_id      = azurerm_network_interface.remote-host-nic.id
-  network_security_group_id = azurerm_network_security_group.remote-host-sg.id
-}
-
