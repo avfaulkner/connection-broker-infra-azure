@@ -45,7 +45,7 @@ resource "azurerm_application_gateway" "appgateway" {
 
   backend_address_pool {
     name = local.backend_address_pool_name
-    ip_addresses = azurerm_linux_virtual_machine.broker[*].private_ip_address
+    ip_addresses = azurerm_linux_virtual_machine.gateway[*].private_ip_address
   }
 
   backend_http_settings {
