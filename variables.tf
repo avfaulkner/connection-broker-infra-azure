@@ -71,3 +71,7 @@ variable "desktop_subnet_private" {
 variable "db_subnet_private" {
   description = "Database private subnet"
 }
+
+variable "gateway_subnet" {
+  description = "Gateway subnet"
+}

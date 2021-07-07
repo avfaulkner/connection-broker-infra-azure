@@ -1,9 +1,11 @@
-# resource "tls_private_key" "ssh-key" {
-#   algorithm = "RSA"
-#   rsa_bits = 4096
+# locals {
+#   vars = {
+#     db_admin = var.dbadmin_username,
+#     db_endpoint = azurerm_postgresql_flexible_server.broker_database.fqdn,
+#     db_name = azurerm_postgresql_flexible_server.broker_database.name
+#   }
 # }
 
-# output "tls_private_key" { value = "tls_private_key.ssh-key.private_key_pem" }
 
 
 resource "azurerm_linux_virtual_machine" "broker" {
@@ -18,7 +20,7 @@ resource "azurerm_linux_virtual_machine" "broker" {
   ]
   disable_password_authentication = true
 
-  custom_data = filebase64("files/user_data.sh")
+  custom_data = filebase64("files/broker_user_data.sh")
 
   admin_ssh_key {
     username       = var.admin_username
@@ -37,6 +39,14 @@ resource "azurerm_linux_virtual_machine" "broker" {
     version   = "latest"
     # id = ""
   }
+
+  lifecycle {
+    ignore_changes = [
+      # We do not want VMs to get re-created when user data is changed
+      custom_data,
+    ]
+  }
+
 
 tags = {
     Name = "${var.instance_name}${count.index}"

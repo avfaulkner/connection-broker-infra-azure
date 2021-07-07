@@ -16,3 +16,7 @@ fi
 echo "Please reboot to start the Leostream broker"
 
 sudo reboot
+
+
+
+# /opt/bin/psql  -t -U ${db_admin} -h ${db_endpoint} -p 5432 -d ${db_db_name}

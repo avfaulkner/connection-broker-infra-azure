@@ -19,7 +19,7 @@ resource "azurerm_network_security_rule" "broker-ssh" {
   protocol                    = "Tcp"
   source_port_range           = "22"
   destination_port_range      = "22"
-  source_address_prefix       = azurerm_subnet.broker_subnet.address_prefix
+  source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.res_group.name
   network_security_group_name = azurerm_network_security_group.broker-sg.name
@@ -35,7 +35,7 @@ resource "azurerm_network_security_rule" "broker-leostream" {
   protocol                    = "Tcp"
   source_port_range           = "60443"
   destination_port_range      = "60443"
-  source_address_prefix       = azurerm_subnet.desktop_subnet.address_prefix
+  source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.res_group.name
   network_security_group_name = azurerm_network_security_group.broker-sg.name
@@ -50,7 +50,7 @@ resource "azurerm_network_security_rule" "broker-pcoip" {
   protocol                    = "Tcp"
   source_port_range           = "4172"
   destination_port_range      = "4172"
-  source_address_prefix       = azurerm_subnet.broker_subnet.address_prefix
+  source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.res_group.name
   network_security_group_name = azurerm_network_security_group.broker-sg.name
