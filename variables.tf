@@ -72,6 +72,10 @@ variable "db_subnet_private" {
   description = "Database private subnet"
 }
 
+variable "gateway_subnet" {
+  description = "Gateway subnet"
+}
+
 variable "bastion_subnet" {
   description = "CIDR for bastion subnet"
 }

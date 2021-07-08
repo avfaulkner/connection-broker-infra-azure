@@ -100,6 +100,36 @@ resource "azurerm_network_interface" "desktop_nic" {
 }
 
 ####################################################################
+# Remote gateway 
+
+resource "azurerm_subnet" "gateway_subnet" {
+  name                 = "gateway-subnet"
+  resource_group_name  = azurerm_resource_group.res_group.name
+  virtual_network_name = azurerm_virtual_network.virt-network.name
+  address_prefixes     = [var.gateway_subnet]
+}
+
+resource "azurerm_public_ip" "gateway-ip" {
+  location            = var.region
+  name                = "gateway-ip"
+  resource_group_name = azurerm_resource_group.res_group.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_interface" "gateway_nic" {
+  count = 2
+  name                = "gateway-nic${count.index}"
+  location            = azurerm_resource_group.res_group.location
+  resource_group_name = azurerm_resource_group.res_group.name
+
+  ip_configuration {
+    name                          = "gateway-internal${count.index}"
+    subnet_id                     = azurerm_subnet.gateway_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+####################################################################
 # Bastions
 
 resource "azurerm_subnet" "bastion_subnet" {
@@ -121,4 +151,3 @@ resource "azurerm_network_interface" "bastion_nic" {
     private_ip_address_allocation = "Dynamic"
   }
 }
-

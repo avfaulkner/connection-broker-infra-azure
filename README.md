@@ -17,10 +17,7 @@
 
 - The Terraform backend / state files will be stored in a separate Resource Group from the rest of the infrastructure.
 This Resource Group will contain a storage account containing a container for blob storage, which will store the Terraform state files. These files allow Terraform to keep track of the physical infrastructure that it has created in Azure.
-An access key must also be created.
-
-- To create the above, run this file first: **azurecli.sh**.
-This is necessary to store the Terraform state files, which are created as the Terraform script runs and 
+To create the above, run this file first: **azurecli.sh**.
 
 ## Steps to Run
 
@@ -31,6 +28,15 @@ az login
 ```
 
 This will open the browser with a message confirming successful authentication.
+
+Note:
+If running in WSL2, then run the following:
+
+```
+az login --use-device-code
+```
+
+Then use a web browser to open the page <https://microsoft.com/devicelogin> and enter the code provided in the terminal output.
 
 2. You will need several values from your Azure account:
 
