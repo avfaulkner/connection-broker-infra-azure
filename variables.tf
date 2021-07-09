@@ -33,7 +33,6 @@ variable "dbadmin_password" {
 }
 
 variable "ssh_cidr_blocks" {
-  type        = list
   description = "List of cidr blocks which can ssh into host instances"
 }
 

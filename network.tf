@@ -75,6 +75,7 @@ resource "azurerm_subnet" "desktop_subnet" {
   address_prefixes     = [var.desktop_subnet_private]
 }
 
+# Public IP is for testing/demo only and will be removed
 resource "azurerm_public_ip" "desktop-ip" {
   location            = var.region
   name                = "desktop-ip"
@@ -82,8 +83,8 @@ resource "azurerm_public_ip" "desktop-ip" {
   allocation_method   = "Dynamic"
 }
 
-resource "azurerm_network_interface" "desktop_nic" {
-  name                = "desktop_nic"
+resource "azurerm_network_interface" "desktop-nic" {
+  name                = "desktop-nic"
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
 
@@ -95,7 +96,7 @@ resource "azurerm_network_interface" "desktop_nic" {
   }
 
   tags = {
-    Name = "desktop_nic"
+    Name = "desktop-nic"
   }
 }
 
@@ -130,7 +131,7 @@ resource "azurerm_network_interface" "gateway_nic" {
 }
 
 ####################################################################
-# Bastions
+# Bastion
 
 resource "azurerm_subnet" "bastion_subnet" {
   name                 = "bastion_subnet"
@@ -139,15 +140,22 @@ resource "azurerm_subnet" "bastion_subnet" {
   address_prefixes     = [var.bastion_subnet]
 }
 
+resource "azurerm_public_ip" "bastion_pub_ip" {
+  name = "bastion-pub-ip"
+  resource_group_name = azurerm_resource_group.res_group.name
+  location = azurerm_resource_group.res_group.location
+  allocation_method = "Static"
+}
+
 resource "azurerm_network_interface" "bastion_nic" {
-  count = 2
-  name                = "bastion-nic${count.index}"
+  name                = "bastion-nic"
   location            = azurerm_resource_group.res_group.location
   resource_group_name = azurerm_resource_group.res_group.name
 
   ip_configuration {
-    name                          = "bastion-internal${count.index}"
+    name                          = "bastion"
     subnet_id                     = azurerm_subnet.bastion_subnet.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id = azurerm_public_ip.bastion_pub_ip.id
   }
 }

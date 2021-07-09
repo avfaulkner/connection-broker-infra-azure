@@ -7,7 +7,7 @@ resource "azurerm_windows_virtual_machine" "desktop" {
   admin_username      = var.admin_username
   admin_password      = var.admin_password
   network_interface_ids = [
-    azurerm_network_interface.desktop_nic.id,
+    azurerm_network_interface.desktop-nic.id,
   ]
 
   os_disk {
