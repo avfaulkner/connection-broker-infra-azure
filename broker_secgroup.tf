@@ -1,11 +1,11 @@
-# # server security group for remote hosts
+# broker sg
 resource "azurerm_network_security_group" "broker-sg" {
   name                = "broker-sg"
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
 
   tags = {
-    Name = "remote-host-sg"
+    Name = "broker-sg"
   }
 }
 
@@ -19,14 +19,14 @@ resource "azurerm_network_security_rule" "broker-ssh" {
   protocol                    = "Tcp"
   source_port_range           = "22"
   destination_port_range      = "22"
-  source_address_prefix       = "*"
+  source_address_prefix       = azurerm_linux_virtual_machine.bastion.private_ip_address
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.res_group.name
   network_security_group_name = azurerm_network_security_group.broker-sg.name
 }
 
 
-# Inbound Leostream
+# Inbound Leostream agent
 resource "azurerm_network_security_rule" "broker-leostream" {
   name                        = "broker-leostream"
   priority                    = 200

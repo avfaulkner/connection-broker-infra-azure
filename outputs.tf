@@ -11,12 +11,10 @@ output broker {
   description = "description"
 }
 
+output "database_fqdn" {
+  value = azurerm_postgresql_flexible_server.broker_database.fqdn
+}
 
-# output "database_fqdn" {
-#   value = azurerm_postgresql_flexible_server.broker_database.fqdn
-# }
-
-# output "db-subnet-address-prefix" {
-#   value = azurerm_subnet.db_subnet
-# }
-
+output "bastion_public_ip" {
+  value = azurerm_public_ip.bastion_pub_ip.ip_address
+}

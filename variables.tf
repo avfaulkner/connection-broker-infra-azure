@@ -33,7 +33,6 @@ variable "dbadmin_password" {
 }
 
 variable "ssh_cidr_blocks" {
-  type        = list
   description = "List of cidr blocks which can ssh into host instances"
 }
 
@@ -57,7 +56,7 @@ variable "virtual_network" {
 }
 
 variable "broker_subnet" {
-  description = "CIDR for scale set private broker subnet"
+  description = "CIDR for broker subnet"
 }
 
 variable "gateway-subnet-frontend" {
@@ -74,4 +73,8 @@ variable "db_subnet_private" {
 
 variable "gateway_subnet" {
   description = "Gateway subnet"
+}
+
+variable "bastion_subnet" {
+  description = "CIDR for bastion subnet"
 }

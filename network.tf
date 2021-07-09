@@ -75,6 +75,7 @@ resource "azurerm_subnet" "desktop_subnet" {
   address_prefixes     = [var.desktop_subnet_private]
 }
 
+# Public IP is for testing/demo only and will be removed
 resource "azurerm_public_ip" "desktop-ip" {
   location            = var.region
   name                = "desktop-ip"
@@ -126,5 +127,35 @@ resource "azurerm_network_interface" "gateway_nic" {
     name                          = "gateway-internal${count.index}"
     subnet_id                     = azurerm_subnet.gateway_subnet.id
     private_ip_address_allocation = "Dynamic"
+  }
+}
+
+####################################################################
+# Bastion
+
+resource "azurerm_subnet" "bastion_subnet" {
+  name                 = "bastion_subnet"
+  resource_group_name  = azurerm_resource_group.res_group.name
+  virtual_network_name = azurerm_virtual_network.virt-network.name
+  address_prefixes     = [var.bastion_subnet]
+}
+
+resource "azurerm_public_ip" "bastion_pub_ip" {
+  name = "bastion-pub-ip"
+  resource_group_name = azurerm_resource_group.res_group.name
+  location = azurerm_resource_group.res_group.location
+  allocation_method = "Static"
+}
+
+resource "azurerm_network_interface" "bastion_nic" {
+  name                = "bastion-nic"
+  location            = azurerm_resource_group.res_group.location
+  resource_group_name = azurerm_resource_group.res_group.name
+
+  ip_configuration {
+    name                          = "bastion"
+    subnet_id                     = azurerm_subnet.bastion_subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id = azurerm_public_ip.bastion_pub_ip.id
   }
 }
