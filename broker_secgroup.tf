@@ -56,6 +56,36 @@ resource "azurerm_network_security_rule" "broker-pcoip" {
   network_security_group_name = azurerm_network_security_group.broker-sg.name
 }
 
+# Inbound HTTP
+resource "azurerm_network_security_rule" "broker-http" {
+  name                        = "broker-http"
+  priority                    = 400
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "80"
+  destination_port_range      = "80"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.res_group.name
+  network_security_group_name = azurerm_network_security_group.broker-sg.name
+}
+
+# Inbound HTTP
+resource "azurerm_network_security_rule" "broker-https" {
+  name                        = "broker-https"
+  priority                    = 500
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "443"
+  destination_port_range      = "443"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.res_group.name
+  network_security_group_name = azurerm_network_security_group.broker-sg.name
+}
+
 # Outbound connections
 resource "azurerm_network_security_rule" "broker-outbound" {
   name                        = "broker-outbound"

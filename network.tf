@@ -25,18 +25,47 @@ resource "azurerm_subnet" "broker_subnet" {
   address_prefixes     = [var.broker_subnet]
 }
 
-resource "azurerm_network_interface" "broker_nic" {
-  count = 2
-  name                = "broker-nic${count.index}"
+resource "azurerm_public_ip" "broker_pub_ip0" {
+  location            = var.region
+  name                = "broker_pub_ip0"
+  resource_group_name = azurerm_resource_group.res_group.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_interface" "broker_nic0" {
+  name                = "broker-nic0"
   location            = azurerm_resource_group.res_group.location
   resource_group_name = azurerm_resource_group.res_group.name
 
   ip_configuration {
-    name                          = "broker-internal${count.index}"
+    name                          = "broker-nic0"
     subnet_id                     = azurerm_subnet.broker_subnet.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.broker_pub_ip0.id
   }
 }
+
+#############
+resource "azurerm_public_ip" "broker_pub_ip1" {
+  location            = var.region
+  name                = "broker_pub_ip1"
+  resource_group_name = azurerm_resource_group.res_group.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_interface" "broker_nic1" {
+  name                = "broker-nic1"
+  location            = azurerm_resource_group.res_group.location
+  resource_group_name = azurerm_resource_group.res_group.name
+
+  ip_configuration {
+    name                          = "broker-nic1"
+    subnet_id                     = azurerm_subnet.broker_subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.broker_pub_ip1.id
+  }
+}
+
 
 #################################################################
 # Databases
