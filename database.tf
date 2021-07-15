@@ -11,5 +11,9 @@ resource "azurerm_postgresql_flexible_server" "broker_database" {
   storage_mb = 32768
 
   sku_name = "GP_Standard_D2s_v3"
+
+  lifecycle {
+   prevent_destroy = true
+  }
 }
 
