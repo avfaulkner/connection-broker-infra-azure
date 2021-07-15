@@ -17,7 +17,7 @@ resource "azurerm_network_security_rule" "bastion-ssh" {
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
-  source_port_range           = "22"
+  source_port_range           = "*"
   destination_port_range      = "22"
   source_address_prefix       = var.ssh_cidr_blocks
   destination_address_prefix  = "*"
