@@ -32,46 +32,46 @@ resource "azurerm_network_interface_backend_address_pool_association" "cmsg_pool
 #######################################
 # Load Balancer Rules
 
-resource "azurerm_lb_rule" "inbound_pcoip"{
-  name = "inbound-pcoip"
-  resource_group_name = azurerm_resource_group.res_group.name
-  loadbalancer_id = azurerm_lb.lb.id
+resource "azurerm_lb_rule" "inbound_pcoip" {
+  name                           = "inbound-pcoip"
+  resource_group_name            = azurerm_resource_group.res_group.name
+  loadbalancer_id                = azurerm_lb.lb.id
   frontend_ip_configuration_name = "PublicIPAddress"
-  protocol = "All"
-  frontend_port = "4172"
-  backend_port = "4172"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_backend_pool.id
+  protocol                       = "All"
+  frontend_port                  = "4172"
+  backend_port                   = "4172"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_backend_pool.id
 }
 
-resource "azurerm_lb_rule" "inbound_ssh"{
-  name = "inbound-ssh"
-  resource_group_name = azurerm_resource_group.res_group.name
-  loadbalancer_id = azurerm_lb.lb.id
+resource "azurerm_lb_rule" "inbound_ssh" {
+  name                           = "inbound-ssh"
+  resource_group_name            = azurerm_resource_group.res_group.name
+  loadbalancer_id                = azurerm_lb.lb.id
   frontend_ip_configuration_name = "PublicIPAddress"
-  protocol = "Tcp"
-  frontend_port = "22"
-  backend_port = "22"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_backend_pool.id
+  protocol                       = "Tcp"
+  frontend_port                  = "22"
+  backend_port                   = "22"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_backend_pool.id
 }
 
-resource "azurerm_lb_rule" "inbound_leostream"{
-  name = "inbound-leostream"
-  resource_group_name = azurerm_resource_group.res_group.name
-  loadbalancer_id = azurerm_lb.lb.id
+resource "azurerm_lb_rule" "inbound_leostream" {
+  name                           = "inbound-leostream"
+  resource_group_name            = azurerm_resource_group.res_group.name
+  loadbalancer_id                = azurerm_lb.lb.id
   frontend_ip_configuration_name = "PublicIPAddress"
-  protocol = "Tcp"
-  frontend_port = "60443"
-  backend_port = "60443"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_backend_pool.id
+  protocol                       = "Tcp"
+  frontend_port                  = "60443"
+  backend_port                   = "60443"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_backend_pool.id
 }
 
-resource "azurerm_lb_rule" "inbound_leostream2"{
-  name = "inbound-leostream2"
-  resource_group_name = azurerm_resource_group.res_group.name
-  loadbalancer_id = azurerm_lb.lb.id
+resource "azurerm_lb_rule" "inbound_leostream2" {
+  name                           = "inbound-leostream2"
+  resource_group_name            = azurerm_resource_group.res_group.name
+  loadbalancer_id                = azurerm_lb.lb.id
   frontend_ip_configuration_name = "PublicIPAddress"
-  protocol = "Tcp"
-  frontend_port = "443"
-  backend_port = "443"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_backend_pool.id
+  protocol                       = "Tcp"
+  frontend_port                  = "443"
+  backend_port                   = "443"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_backend_pool.id
 }

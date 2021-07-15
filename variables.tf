@@ -50,7 +50,7 @@ variable "ssh_cidr_blocks" {
 }
 
 variable "destination_address_prefix" {
-  type        = list
+  type        = list(any)
   description = "outbound address for security group rules"
 }
 

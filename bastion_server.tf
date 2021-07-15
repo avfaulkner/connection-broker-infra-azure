@@ -1,8 +1,8 @@
 # Linux Bastion
 resource "azurerm_linux_virtual_machine" "bastion" {
-  name                  = "Bastion-${var.region}-${var.env}"
-  location              = var.region
-  resource_group_name   = azurerm_resource_group.res_group.name
+  name                = "Bastion-${var.region}-${var.env}"
+  location            = var.region
+  resource_group_name = azurerm_resource_group.res_group.name
   size                = "Standard_F2"
   admin_username      = var.admin_username
   admin_password      = var.admin_password
@@ -11,11 +11,11 @@ resource "azurerm_linux_virtual_machine" "bastion" {
   ]
   disable_password_authentication = false
 
- # custom_data = filebase64("files/bastion_user_data.sh")
+  # custom_data = filebase64("files/bastion_user_data.sh")
 
   admin_ssh_key {
-    username       = var.admin_username
-    public_key     = file("${var.ssh_pub_key_path}")
+    username   = var.admin_username
+    public_key = file("${var.ssh_pub_key_path}")
   }
 
   os_disk {
@@ -39,7 +39,7 @@ resource "azurerm_linux_virtual_machine" "bastion" {
   }
 
 
-tags = {
+  tags = {
     Name = "Bastion"
   }
 }
