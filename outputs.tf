@@ -2,8 +2,8 @@ output "resource_group" {
   value = azurerm_resource_group.res_group.id
 }
 
-output "application_gateway_frontend_ip" {
-  value = azurerm_public_ip.appgw-pub-ip.ip_address
+output "gateway_frontend_ip" {
+  value = azurerm_public_ip.lb_ip.ip_address
 }
 
 output "database_fqdn" {

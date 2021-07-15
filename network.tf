@@ -147,13 +147,12 @@ resource "azurerm_public_ip" "gateway-ip" {
 }
 
 resource "azurerm_network_interface" "gateway_nic" {
-  count = 2
-  name                = "gateway-nic${count.index}"
+  name                = "gateway-nic"
   location            = azurerm_resource_group.res_group.location
   resource_group_name = azurerm_resource_group.res_group.name
 
   ip_configuration {
-    name                          = "gateway-internal${count.index}"
+    name                          = "gateway-internal"
     subnet_id                     = azurerm_subnet.gateway_subnet.id
     private_ip_address_allocation = "Dynamic"
   }

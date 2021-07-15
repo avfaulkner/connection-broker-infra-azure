@@ -52,17 +52,11 @@ az account list --output table
 az account set --subscription <Azure-SubscriptionId>
 ```
 
-4. Use your subscription ID to create the service principal account:
+4. Choose the proper tenant ID:
 
 ```
-az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/SUBSCRIPTION_ID" --name="Terraform-spa"
+az account tenant list --output table
 ```
-
-This code will output several values. These values will be mapped to these Terraform variables:
-
-- appId (Azure) → client_id (Terraform).
-- password (Azure) → client_secret (Terraform).
-- tenant (Azure) → tenant_id (Terraform).
 
 Add the subscription ID and Tenant ID to `providers.tf` in 'backend "azurerm"'.
 

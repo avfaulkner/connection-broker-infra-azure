@@ -1,6 +1,6 @@
 # Linux Bastion
 resource "azurerm_linux_virtual_machine" "bastion" {
-  name                  = "Bastion"
+  name                  = "Bastion-${var.region}-${var.env}"
   location              = var.region
   resource_group_name   = azurerm_resource_group.res_group.name
   size                = "Standard_F2"

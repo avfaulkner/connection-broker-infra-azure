@@ -1,6 +1,6 @@
 # create windows desktop for demo purposes
 resource "azurerm_windows_virtual_machine" "desktop" {
-  name                = "desktop"
+  name                = "desktop-${var.language}-${var.region}-${var.env}"
   resource_group_name = azurerm_resource_group.res_group.name
   location            = azurerm_resource_group.res_group.location
   size                = "Standard_B4ms"

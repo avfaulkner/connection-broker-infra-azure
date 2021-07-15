@@ -7,6 +7,14 @@ variable "region" {
   description = "Region to place the infrastructure"
 }
 
+variable "env" {
+  description = "Environment in which to place the infrastructure"
+}
+
+variable "language" {
+  description = "Language used in VM"
+}
+
 variable "instance_name" {
   type        = string
   description = "Name of your instance"
@@ -30,6 +38,11 @@ variable "dbadmin_username" {
 variable "dbadmin_password" {
   type        = string
   description = "Database admin password"
+}
+
+variable "db_name" {
+  type        = string
+  description = "Database name"
 }
 
 variable "ssh_cidr_blocks" {
