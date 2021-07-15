@@ -1,6 +1,6 @@
 # PostgreSQL Flexible Server is highly available
 resource "azurerm_postgresql_flexible_server" "broker_database" {
-  name                   = "${var.db_name}-${var.region}-${var.env}"
+  name                   = var.db_name
   resource_group_name    = azurerm_resource_group.res_group.name
   location               = azurerm_resource_group.res_group.location
   version                = "12"
