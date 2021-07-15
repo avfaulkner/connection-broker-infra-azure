@@ -34,7 +34,7 @@ resource "azurerm_network_security_rule" "broker-leostream" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "60443"
+  destination_port_range      = "8080"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.res_group.name
@@ -49,7 +49,7 @@ resource "azurerm_network_security_rule" "broker-pcoip" {
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "4172"
+  destination_port_range      = "60443"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.res_group.name
