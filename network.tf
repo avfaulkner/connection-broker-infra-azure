@@ -90,8 +90,8 @@ resource "azurerm_subnet" "db_subnet" {
 resource "azurerm_postgresql_flexible_server_firewall_rule" "db-firewall-rule" {
   name             = "db-firewall-rule"
   server_id        = azurerm_postgresql_flexible_server.broker_database.id
-  start_ip_address = "10.0.1.0"
-  end_ip_address   = "10.0.1.254"
+  start_ip_address = "10.10.1.0"
+  end_ip_address   = "10.10.1.254"
 }
 
 ####################################################################
@@ -155,6 +155,7 @@ resource "azurerm_network_interface" "gateway_nic" {
     name                          = "gateway-internal"
     subnet_id                     = azurerm_subnet.gateway_subnet.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.gateway-ip.id
   }
 }
 
