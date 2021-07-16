@@ -90,8 +90,8 @@ resource "azurerm_subnet" "db_subnet" {
 resource "azurerm_postgresql_flexible_server_firewall_rule" "db-firewall-rule" {
   name             = "db-firewall-rule"
   server_id        = azurerm_postgresql_flexible_server.broker_database.id
-  start_ip_address = "10.0.1.0"
-  end_ip_address   = "10.0.1.254"
+  start_ip_address = "10.10.1.0"
+  end_ip_address   = "10.10.1.254"
 }
 
 ####################################################################
@@ -147,15 +147,15 @@ resource "azurerm_public_ip" "gateway-ip" {
 }
 
 resource "azurerm_network_interface" "gateway_nic" {
-  count = 2
-  name                = "gateway-nic${count.index}"
+  name                = "gateway-nic"
   location            = azurerm_resource_group.res_group.location
   resource_group_name = azurerm_resource_group.res_group.name
 
   ip_configuration {
-    name                          = "gateway-internal${count.index}"
+    name                          = "gateway-internal"
     subnet_id                     = azurerm_subnet.gateway_subnet.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.gateway-ip.id
   }
 }
 
@@ -170,10 +170,10 @@ resource "azurerm_subnet" "bastion_subnet" {
 }
 
 resource "azurerm_public_ip" "bastion_pub_ip" {
-  name = "bastion-pub-ip"
+  name                = "bastion-pub-ip"
   resource_group_name = azurerm_resource_group.res_group.name
-  location = azurerm_resource_group.res_group.location
-  allocation_method = "Static"
+  location            = azurerm_resource_group.res_group.location
+  allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "bastion_nic" {
@@ -185,6 +185,6 @@ resource "azurerm_network_interface" "bastion_nic" {
     name                          = "bastion"
     subnet_id                     = azurerm_subnet.bastion_subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = azurerm_public_ip.bastion_pub_ip.id
+    public_ip_address_id          = azurerm_public_ip.bastion_pub_ip.id
   }
 }
