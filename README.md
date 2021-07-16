@@ -94,11 +94,11 @@ terraform apply
 - two resource groups
   - one for infrastructure
   - one which will contain blob storage to store the terraform state files
-- application gateway
-  - static public ip address for app gateway frontend
-  - backend pool for app gateway backend
-    - virtual machine scale set for brokers
-  - app gateway listener
+- Load balancer
+  - static public ip address for load balancer frontend
+  - backend pool for load balancer backend
+    - broker instances
+  - load balancer listener
   - a routing rule to send traffic from a given frontend IP address to one or more backend targets.
     - A routing rule must contain a listener and at least one backend target.
 - virtual network
