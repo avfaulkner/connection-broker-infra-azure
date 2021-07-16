@@ -94,13 +94,14 @@ terraform apply
 - two resource groups
   - one for infrastructure
   - one which will contain blob storage to store the terraform state files
-- Load balancer
+- Load balancer 1
   - static public ip address for load balancer frontend
   - backend pool for load balancer backend
     - broker instances
   - load balancer listener
   - a routing rule to send traffic from a given frontend IP address to one or more backend targets.
     - A routing rule must contain a listener and at least one backend target.
+- Load balancer 2 for gateway servers (with same componenents as load balancer 1)
 - virtual network
 - public subnet
 - private subnet
