@@ -29,12 +29,17 @@ resource "azurerm_linux_virtual_machine" "broker0" {
     # id = ""
   }
 
-  # lifecycle {
-  #   ignore_changes = [
-  #     # We do not want VMs to get re-created when user data is changed
-  #     custom_data,
-  #   ]
-  # }
+  lifecycle {
+    ignore_changes = [
+      # We do not want VMs to get re-created when user data is changed
+      custom_data,
+    ]
+  }
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [var.identity_ids]
+  }
 
   tags = {
     Name = "${var.instance_name}0"
@@ -79,6 +84,11 @@ resource "azurerm_linux_virtual_machine" "broker1" {
       # We do not want VMs to get re-created when user data is changed
       custom_data,
     ]
+  }
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [var.identity_ids]
   }
 
   tags = {
