@@ -5,6 +5,8 @@
 ## Diagram
 
 ![certiport_leostream](./certiport_leostream.png?raw=true "Infra diagram")
+*Note that the code does not create the Azure App Registration, yet this is a necessary component in order to allow the Leostream Broker
+to properly interact with some Azure components, such as images. 
 
 ## Requirements
 
