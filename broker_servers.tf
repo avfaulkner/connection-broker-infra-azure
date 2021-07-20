@@ -48,7 +48,7 @@ resource "azurerm_linux_virtual_machine" "broker0" {
 
   identity {
     type = "SystemAssigned, UserAssigned"
-    identity_ids = [var.identity_ids]
+    identity_ids = var.identity_ids
   }
 
   tags = {
@@ -99,7 +99,7 @@ resource "azurerm_linux_virtual_machine" "broker1" {
 
   identity {
     type = "SystemAssigned, UserAssigned"
-    identity_ids = [var.identity_ids]
+    identity_ids = var.identity_ids
   }
 
   tags = {

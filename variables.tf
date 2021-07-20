@@ -91,3 +91,7 @@ variable "gateway_subnet" {
 variable "bastion_subnet" {
   description = "CIDR for bastion subnet"
 }
+
+variable "identity_ids" {
+  description = "Instances given the UserAssigned identity type must have at least one identity ID assigned to it"
+}

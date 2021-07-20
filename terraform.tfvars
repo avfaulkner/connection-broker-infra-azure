@@ -19,3 +19,4 @@ desktop_subnet_private     = ""
 db_subnet_private          = ""  
 bastion_subnet             = "" 
 gateway_subnet             = ""
+identity_ids = [""]
