@@ -6,6 +6,10 @@ output "gateway_frontend_ip" {
   value = azurerm_public_ip.lb_ip.ip_address
 }
 
+output "broker_frontend_ip" {
+  value = azurerm_public_ip.lb_broker_ip.ip_address
+}
+
 output "database_fqdn" {
   value = azurerm_postgresql_flexible_server.broker_database.fqdn
 }
