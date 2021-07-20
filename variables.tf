@@ -95,3 +95,7 @@ variable "bastion_subnet" {
 variable "identity_ids" {
   description = "Instances given the UserAssigned identity type must have at least one identity ID assigned to it"
 }
+
+variable "license_subnet" {
+  description = "Subnet for license server"
+}

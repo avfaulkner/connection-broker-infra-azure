@@ -188,3 +188,33 @@ resource "azurerm_network_interface" "bastion_nic" {
     public_ip_address_id          = azurerm_public_ip.bastion_pub_ip.id
   }
 }
+
+####################################################################
+# License server 
+
+resource "azurerm_subnet" "license_subnet" {
+  name                 = "license-subnet"
+  resource_group_name  = azurerm_resource_group.res_group.name
+  virtual_network_name = azurerm_virtual_network.virt-network.name
+  address_prefixes     = [var.license_subnet]
+}
+
+resource "azurerm_public_ip" "license-ip" {
+  location            = var.region
+  name                = "license-ip"
+  resource_group_name = azurerm_resource_group.res_group.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_interface" "license_nic" {
+  name                = "license-nic"
+  location            = azurerm_resource_group.res_group.location
+  resource_group_name = azurerm_resource_group.res_group.name
+
+  ip_configuration {
+    name                          = "licenseIPConfig"
+    subnet_id                     = azurerm_subnet.license_subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.license-ip.id
+  }
+}
