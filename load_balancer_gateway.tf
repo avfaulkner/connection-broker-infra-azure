@@ -43,17 +43,6 @@ resource "azurerm_lb_rule" "inbound_pcoip" {
   backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_backend_pool.id
 }
 
-resource "azurerm_lb_rule" "inbound_ssh" {
-  name                           = "inbound-ssh"
-  resource_group_name            = azurerm_resource_group.res_group.name
-  loadbalancer_id                = azurerm_lb.lb.id
-  frontend_ip_configuration_name = "PublicIPAddress"
-  protocol                       = "Tcp"
-  frontend_port                  = "22"
-  backend_port                   = "22"
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_backend_pool.id
-}
-
 resource "azurerm_lb_rule" "inbound_leostream" {
   name                           = "inbound-leostream"
   resource_group_name            = azurerm_resource_group.res_group.name
