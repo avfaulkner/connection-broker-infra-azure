@@ -23,11 +23,11 @@ resource "azurerm_lb_backend_address_pool" "lb_backend_pool" {
 
 #######################################
 # Gateway to LB association
-# resource "azurerm_network_interface_backend_address_pool_association" "cmsg_pool" {
-#   network_interface_id    = azurerm_network_interface.gateway_nic.id
-#   ip_configuration_name   = azurerm_public_ip.gateway-ip.id
-#   backend_address_pool_id = azurerm_lb_backend_address_pool.lb_backend_pool.id
-# }
+resource "azurerm_network_interface_backend_address_pool_association" "gateway_pool" {
+  network_interface_id    = azurerm_network_interface.gateway_nic.id
+  ip_configuration_name   = "gateway-internal"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_backend_pool.id
+}
 
 #######################################
 # Load Balancer Rules

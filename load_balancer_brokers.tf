@@ -26,7 +26,13 @@ resource "azurerm_lb_backend_address_pool" "lbb_backend_pool" {
 # Broker to LB association
 resource "azurerm_network_interface_backend_address_pool_association" "broker_pool" {
   network_interface_id    = azurerm_network_interface.broker_nic0.id
-  ip_configuration_name   = azurerm_public_ip.lb_broker_ip.id
+  ip_configuration_name   = "broker-nic0"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.lbb_backend_pool.id
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "broker_pool2" {
+  network_interface_id    = azurerm_network_interface.broker_nic1.id
+  ip_configuration_name   = "broker-nic1"
   backend_address_pool_id = azurerm_lb_backend_address_pool.lbb_backend_pool.id
 }
 
