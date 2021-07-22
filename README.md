@@ -21,6 +21,9 @@ to properly interact with some Azure components, such as images.
 This Resource Group will contain a storage account containing a container for blob storage, which will store the Terraform state files. These files allow Terraform to keep track of the physical infrastructure that it has created in Azure.
 To create the above, run this file first: **azurecli.sh**.
 
+## Pre-reqs
+Please add all necessary variables in terraform.tfvars before proceeding. 
+
 ## Steps to Run
 
 1. Authenticate to Azure
