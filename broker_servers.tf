@@ -12,12 +12,15 @@ resource "azurerm_linux_virtual_machine" "broker0" {
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
   availability_set_id   = azurerm_availability_set.avset.id
-  size                = "Standard_F2"
+  size                = "Standard_F2s_v2"
   admin_username      = var.admin_username
   network_interface_ids = [
     azurerm_network_interface.broker_nic0.id,
   ]
   disable_password_authentication = true
+  depends_on = [
+    azurerm_postgresql_flexible_server.broker_database
+  ]
 
   custom_data = filebase64("files/broker_user_data.sh")
 
@@ -51,6 +54,8 @@ resource "azurerm_linux_virtual_machine" "broker0" {
     identity_ids = var.identity_ids
   }
 
+  boot_diagnostics {}
+
   tags = {
     Name = "${var.instance_name}0"
   }
@@ -63,12 +68,15 @@ resource "azurerm_linux_virtual_machine" "broker1" {
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
   availability_set_id   = azurerm_availability_set.avset.id
-  size                = "Standard_F2"
+  size                = "Standard_F2s_v2"
   admin_username      = var.admin_username
   network_interface_ids = [
     azurerm_network_interface.broker_nic1.id,
   ]
   disable_password_authentication = true
+  depends_on = [
+    azurerm_postgresql_flexible_server.broker_database
+  ]
 
   custom_data = filebase64("files/broker_user_data.sh")
 
@@ -96,6 +104,8 @@ resource "azurerm_linux_virtual_machine" "broker1" {
       custom_data,
     ]
   }
+
+  boot_diagnostics {}
 
   identity {
     type = "SystemAssigned, UserAssigned"

@@ -10,6 +10,10 @@ output "broker_frontend_ip" {
   value = azurerm_public_ip.lb_broker_ip.ip_address
 }
 
+output "broker_frontend_fqdn" {
+  value = azurerm_public_ip.lb_broker_ip.fqdn
+}
+
 output "database_fqdn" {
   value = azurerm_postgresql_flexible_server.broker_database.fqdn
 }
@@ -22,6 +26,10 @@ output "leostream_broker0" {
   value = azurerm_public_ip.broker_pub_ip0.ip_address
 }
 
-output "leostream_broker1" {
-  value = azurerm_public_ip.broker_pub_ip1.ip_address
+# output "leostream_broker1" {
+#   value = azurerm_public_ip.broker_pub_ip1.ip_address
+# }
+
+output "license_server_ip" {
+  value = azurerm_network_interface.license_nic.private_ip_address
 }

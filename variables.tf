@@ -95,3 +95,11 @@ variable "bastion_subnet" {
 variable "identity_ids" {
   description = "Instances given the UserAssigned identity type must have at least one identity ID assigned to it"
 }
+
+variable "license_subnet" {
+  description = "Subnet for license server"
+}
+
+variable "broker_lb_domain_name_label" {
+  description = "DNS name for broker load balancer"
+}

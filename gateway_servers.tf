@@ -3,7 +3,7 @@ resource "azurerm_linux_virtual_machine" "gateway" {
   name                = "cmsg-gateway-${var.region}-${var.env}"
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
-  size                = "Standard_F2"
+  size                = "Standard_F2s_v2"
   admin_username      = var.admin_username
   network_interface_ids = [
     azurerm_network_interface.gateway_nic.id,
@@ -29,6 +29,12 @@ resource "azurerm_linux_virtual_machine" "gateway" {
     version   = "latest"
     # id = ""
   }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  boot_diagnostics {}
 
   tags = {
     Name = "cmsg-gateway"
