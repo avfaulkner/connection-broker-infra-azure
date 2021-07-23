@@ -17,7 +17,7 @@ resource "azurerm_network_security_rule" "desktop-rdp" {
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
-  source_port_range           = "3389"
+  source_port_range           = "*"
   destination_port_range      = "3389"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
@@ -33,8 +33,8 @@ resource "azurerm_network_security_rule" "desktop-leostream" {
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
-  source_port_range           = "60443"
-  destination_port_range      = "60443"
+  source_port_range           = "*"
+  destination_port_range      = "8080"
   source_address_prefix       = azurerm_subnet.broker_subnet.address_prefix
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.res_group.name
@@ -48,7 +48,7 @@ resource "azurerm_network_security_rule" "desktop-pcoip" {
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
-  source_port_range           = "4172"
+  source_port_range           = "*"
   destination_port_range      = "4172"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
