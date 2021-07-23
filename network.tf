@@ -14,6 +14,7 @@ resource "azurerm_subnet" "gateway-subnet-frontend" {
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.gateway-subnet-frontend]
+  service_endpoints    = [ "Microsoft.Storage" ]
 }
 
 ############################################################
@@ -23,6 +24,7 @@ resource "azurerm_subnet" "broker_subnet" {
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.broker_subnet]
+  service_endpoints    = [ "Microsoft.Storage" ]
 }
 
 resource "azurerm_public_ip" "broker_pub_ip0" {
@@ -46,12 +48,12 @@ resource "azurerm_network_interface" "broker_nic0" {
 }
 
 #############
-resource "azurerm_public_ip" "broker_pub_ip1" {
-  location            = var.region
-  name                = "broker_pub_ip1"
-  resource_group_name = azurerm_resource_group.res_group.name
-  allocation_method   = "Dynamic"
-}
+# resource "azurerm_public_ip" "broker_pub_ip1" {
+#   location            = var.region
+#   name                = "broker_pub_ip1"
+#   resource_group_name = azurerm_resource_group.res_group.name
+#   allocation_method   = "Dynamic"
+# }
 
 resource "azurerm_network_interface" "broker_nic1" {
   name                = "broker-nic1"
@@ -62,7 +64,7 @@ resource "azurerm_network_interface" "broker_nic1" {
     name                          = "broker-nic1"
     subnet_id                     = azurerm_subnet.broker_subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.broker_pub_ip1.id
+    # public_ip_address_id          = azurerm_public_ip.broker_pub_ip1.id
   }
 }
 
@@ -102,6 +104,7 @@ resource "azurerm_subnet" "desktop_subnet" {
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.desktop_subnet_private]
+  service_endpoints    = [ "Microsoft.Storage" ]
 }
 
 # Public IP is for testing/demo only and will be removed
@@ -137,14 +140,15 @@ resource "azurerm_subnet" "gateway_subnet" {
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.gateway_subnet]
+  service_endpoints    = [ "Microsoft.Storage" ]
 }
 
-resource "azurerm_public_ip" "gateway-ip" {
-  location            = var.region
-  name                = "gateway-ip"
-  resource_group_name = azurerm_resource_group.res_group.name
-  allocation_method   = "Dynamic"
-}
+# resource "azurerm_public_ip" "gateway-ip" {
+#   location            = var.region
+#   name                = "gateway-ip"
+#   resource_group_name = azurerm_resource_group.res_group.name
+#   allocation_method   = "Dynamic"
+# }
 
 resource "azurerm_network_interface" "gateway_nic" {
   name                = "gateway-nic"
@@ -155,7 +159,6 @@ resource "azurerm_network_interface" "gateway_nic" {
     name                          = "gateway-internal"
     subnet_id                     = azurerm_subnet.gateway_subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.gateway-ip.id
   }
 }
 
@@ -167,6 +170,7 @@ resource "azurerm_subnet" "bastion_subnet" {
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.bastion_subnet]
+  service_endpoints    = [ "Microsoft.Storage" ]
 }
 
 resource "azurerm_public_ip" "bastion_pub_ip" {
@@ -197,14 +201,15 @@ resource "azurerm_subnet" "license_subnet" {
   resource_group_name  = azurerm_resource_group.res_group.name
   virtual_network_name = azurerm_virtual_network.virt-network.name
   address_prefixes     = [var.license_subnet]
+  service_endpoints = [ "Microsoft.Storage" ]
 }
 
-resource "azurerm_public_ip" "license-ip" {
-  location            = var.region
-  name                = "license-ip"
-  resource_group_name = azurerm_resource_group.res_group.name
-  allocation_method   = "Dynamic"
-}
+# resource "azurerm_public_ip" "license-ip" {
+#   location            = var.region
+#   name                = "license-ip"
+#   resource_group_name = azurerm_resource_group.res_group.name
+#   allocation_method   = "Dynamic"
+# }
 
 resource "azurerm_network_interface" "license_nic" {
   name                = "license-nic"
@@ -215,6 +220,5 @@ resource "azurerm_network_interface" "license_nic" {
     name                          = "licenseIPConfig"
     subnet_id                     = azurerm_subnet.license_subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.license-ip.id
   }
 }

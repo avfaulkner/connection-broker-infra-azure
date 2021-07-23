@@ -26,9 +26,9 @@ output "leostream_broker0" {
   value = azurerm_public_ip.broker_pub_ip0.ip_address
 }
 
-output "leostream_broker1" {
-  value = azurerm_public_ip.broker_pub_ip1.ip_address
-}
+# output "leostream_broker1" {
+#   value = azurerm_public_ip.broker_pub_ip1.ip_address
+# }
 
 output "license_server_ip" {
   value = azurerm_network_interface.license_nic.private_ip_address
