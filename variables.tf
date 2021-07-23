@@ -99,3 +99,7 @@ variable "identity_ids" {
 variable "license_subnet" {
   description = "Subnet for license server"
 }
+
+variable "broker_lb_domain_name_label" {
+  description = "DNS name for broker load balancer"
+}

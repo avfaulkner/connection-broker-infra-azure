@@ -3,7 +3,7 @@ resource "azurerm_linux_virtual_machine" "bastion" {
   name                = "Bastion-${var.region}-${var.env}"
   location            = var.region
   resource_group_name = azurerm_resource_group.res_group.name
-  size                = "Standard_F2"
+  size                = "Standard_F2s_v2"
   admin_username      = var.admin_username
   admin_password      = var.admin_password
   network_interface_ids = [
@@ -38,7 +38,12 @@ resource "azurerm_linux_virtual_machine" "bastion" {
     ]
   }
 
-
+  boot_diagnostics {}
+  
+  identity {
+    type = "SystemAssigned"
+  }
+  
   tags = {
     Name = "Bastion"
   }
