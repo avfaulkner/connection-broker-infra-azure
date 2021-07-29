@@ -10,20 +10,10 @@ resource "azurerm_resource_group" "tfstate-rg" {
   }
 }
 
-# Generate a random storage name
-resource "random_string" "tfstate-name" {
-  length  = 4
-  upper   = false
-  number  = true
-  lower   = true
-  special = false
-}
-
 # Storage Account for the Terraform State File
 resource "azurerm_storage_account" "tfstate-sta" {
   depends_on = [azurerm_resource_group.tfstate-rg]
  
-#   name = "tfstate${random_string.tfstate-name.result}"
   name = "tfstate6423"
   resource_group_name = azurerm_resource_group.tfstate-rg.name
   location = azurerm_resource_group.tfstate-rg.location
@@ -47,4 +37,8 @@ resource "azurerm_storage_container" "tfstate-container" {
   
   name                 = "tfstate"
   storage_account_name = azurerm_storage_account.tfstate-sta.name
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
