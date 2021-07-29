@@ -33,3 +33,15 @@ output "leostream_broker0" {
 output "license_server_ip" {
   value = azurerm_network_interface.license_nic.private_ip_address
 }
+
+output "terraform_state_resource_group_name" {
+  value = azurerm_resource_group.tfstate-rg.name
+}
+
+output "terraform_state_storage_account" {
+  value = azurerm_storage_account.tfstate-sta.name
+}
+
+output "terraform_state_storage_container" {
+  value = azurerm_storage_container.tfstate-container.name
+}
