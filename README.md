@@ -85,13 +85,13 @@ terraform init
 8. View the infrastructure plan
 
 ```
-terraform plan
+terraform plan -out=tfplan
 ```
 
 9. Apply the Terraform plan
 
 ```
-terraform apply
+terraform apply tfplan
 ```
 
 ## Resources
